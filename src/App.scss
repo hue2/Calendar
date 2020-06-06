@@ -1,0 +1,78 @@
+@import '~@fullcalendar/core/main.css';
+@import '~@fullcalendar/daygrid/main.css';
+@import '~@fullcalendar/timegrid/main.css';
+@import '~@fullcalendar/list/main.css';
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap');
+$dark-bg: #171e24;
+$dark-blue: #353B47;
+$light-blue: #306a87;
+
+body {
+  background: $dark-bg !important;
+}
+
+.App {
+  text-align: right;
+  padding: 15px;
+  color: white;
+  background: $dark-bg;
+  font-family: 'Roboto', sans-serif;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+table tr, input {
+  cursor: pointer;
+}
+
+.fc-view, .fc-unthemed .fc-list-empty {
+  background-color: $dark-blue !important;
+}
+
+.fc-widget-header {
+  background: #59596B !important;
+}
+
+.fc-view-container {
+    border: none;
+    div {
+      border: none;
+    }
+}
+
+// .fc-unthemed .fc-list-empty {
+//   background-color: #1c2a35;
+// }

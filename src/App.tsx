@@ -1,25 +1,58 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useContext } from 'react';
+import FullCalendar from '@fullcalendar/react';
+import listPlugin  from '@fullcalendar/list';
+import interactionPlugin from '@fullcalendar/interaction';
+import { EventModal } from './EventModal/EventModal';
+import { IEvent, EventContext } from './Context/EventContext';
+import './App.scss';
 
 function App() {
+  const context = useContext(EventContext);
+  const { onShow, onEdit, events } = context;
+
+  function handleShow() {
+    onShow();
+  }
+
+  function handleEditModal(event : any) {
+    let data : IEvent = {
+      id: event.id,
+      title: event.title,
+      start: (event.start).toISOString().substring(0, 10),
+      end: event.end
+    }
+    onEdit(data);
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <div className="App">
+        <FullCalendar 
+          defaultView="listWeek" 
+          header={{
+            center: 'addEventButton',
+          }}
+          plugins={[ interactionPlugin, listPlugin  ]}
+          selectable={true}
+          customButtons={ 
+            {
+              addEventButton: {
+                text: 'Add Event',
+                click: handleShow,
+              }
+            }
+          }
+          
+          events={events}
+          dateClick={(info) => {
+            alert(info.dateStr);
+          }}
+          eventClick={(info) => {
+            handleEditModal(info.event);
+          }}
+          eventColor='#E79B25'
+        />
+        <EventModal />
+      </div>
   );
 }
 
