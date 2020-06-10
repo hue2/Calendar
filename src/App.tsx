@@ -4,11 +4,13 @@ import listPlugin  from '@fullcalendar/list';
 import interactionPlugin from '@fullcalendar/interaction';
 import { EventModal } from './EventModal/EventModal';
 import { IEvent, EventContext } from './Context/EventContext';
+import { Button } from 'react-bootstrap';
+import { FileModal } from './FileModal/FileModal.jsx';
 import './App.scss';
 
 function App() {
   const context = useContext(EventContext);
-  const { onShow, onEdit, events } = context;
+  const { onShow, onEdit, events, onExport, onImport, onImportSel } = context;
 
   function handleShow() {
     onShow();
@@ -26,10 +28,16 @@ function App() {
 
   return (
       <div className="App">
+        <br />
         <FullCalendar 
           defaultView="listWeek" 
+          views={{
+            listWeek: { buttonText: 'Week' },
+            listMonth: { buttonText: 'Month' },
+          }}
           header={{
             center: 'addEventButton',
+            right: 'prev, listWeek, listMonth, next'
           }}
           plugins={[ interactionPlugin, listPlugin  ]}
           selectable={true}
@@ -52,6 +60,12 @@ function App() {
           eventColor='#E79B25'
         />
         <EventModal />
+        <br />
+        <div  className="f-left">
+          <input type="file" accept=".json" onChange={(e : any) => onImportSel(e.target.files[0].path)} />
+          <Button variant="success" onClick={onImport}>Import</Button>
+        </div>
+        <Button onClick={onExport}>Export</Button>
       </div>
   );
 }

@@ -58,6 +58,12 @@ table tr, input {
   cursor: pointer;
 }
 
+table tr {
+  &:hover {
+    color: $dark-bg;
+  }
+}
+
 .fc-view, .fc-unthemed .fc-list-empty {
   background-color: $dark-blue !important;
 }
@@ -73,6 +79,15 @@ table tr, input {
     }
 }
 
-// .fc-unthemed .fc-list-empty {
-//   background-color: #1c2a35;
-// }
+.export-btn {
+  font-size: 12px;
+}
+
+.f-left {
+  float: left;
+}
+
+.fc-scroller {
+  height: auto !important;
+  overflow: auto;
+}

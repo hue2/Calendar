@@ -1,12 +1,14 @@
 import React, { useState, createContext, useEffect } from "react";
 import Db from '../Database/Db';
 import { IEventDb } from './Types';
+const fs = require('fs');
 
 interface IContextProps {
     show: boolean,
     date: string,
     note: string,
     events: Array<IEvent>,
+    importDest: string,
     onShow: () => void,
     onClose: () => void,
     onDatePick: (event : any) => void,
@@ -14,6 +16,10 @@ interface IContextProps {
     onEventSave: (id: string | null) => void,
     onEdit: (event : IEvent) => void,
     onDelete: () => void,
+    onExportSelect: (data: any) => void,
+    onExport: () => void,
+    onImportSel: (data: string) => void,
+    onImport: (event: any) => void;
 }
 
 export interface IEvent {
@@ -33,6 +39,7 @@ export function EventProvider(props: any) {
     const [date, setDate] = useState(defaultDate);
     const [note, setNote] = useState("");
     const [id, setId] = useState("");
+    const [importDest, setImport] = useState("");
     const [events, setEvent] = useState<Array<IEvent>>([]);
 
     useEffect(() => {
@@ -90,6 +97,10 @@ export function EventProvider(props: any) {
        }
     }
 
+    function handleExportDestination(data: any) {
+        let allData = data.target.files[0].path
+    }
+
     function handleDelete() {
         db.deleteEvent(id).then(() => {
             handleClose();
@@ -128,6 +139,37 @@ export function EventProvider(props: any) {
         });
     }
 
+    function handleExport() {
+        const backupDir = `C:/calender-backup`;
+        let date = new Date();
+        let minute = date.getMinutes();
+        let hour = date.getHours();
+        let second = date.getSeconds();
+
+        if (!fs.existsSync(backupDir)){
+            fs.mkdirSync(backupDir);
+        }
+        let allData = db.getEvent().then(result => {
+            fs.writeFile(`${backupDir}/${defaultDate}-${hour}${minute}${second}.json`,
+                JSON.stringify(result),
+                function(err) {
+                    if (err) {
+                        alert(err);
+                    }
+                    else {
+                        alert("Exported to C:/calendar-backup");
+                    }
+                }
+            )
+        })
+    }
+
+    function handleImport() {
+        fs.readFile(importDest, function(err, result) {
+            db.upsertEvents(JSON.parse(result));
+            db.getEvent();
+        });        
+    }
 
     return (
         <EventContext.Provider value={{
@@ -135,6 +177,7 @@ export function EventProvider(props: any) {
                 date, 
                 note,
                 events,
+                importDest,
                 onShow: handleShow, 
                 onClose: handleClose,
                 onDatePick: handleDatePick, 
@@ -142,6 +185,10 @@ export function EventProvider(props: any) {
                 onEventSave: handleEventSave,
                 onEdit: handleEditModalShow,
                 onDelete: handleDelete,
+                onExportSelect: handleExportDestination,
+                onExport: handleExport,
+                onImport: handleImport,
+                onImportSel: setImport,
             }}
         >
             {props.children}

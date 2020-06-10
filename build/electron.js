@@ -1,4 +1,5 @@
 const electron = require("electron");
+const mkdirp = require('mkdirp');
 const app = electron.app;
 
 const BrowserWindow = electron.BrowserWindow;
@@ -11,7 +12,10 @@ let mainWindow;
 
 function createWindow() {
     mainWindow = new BrowserWindow({ 
-        backgroundColor: '#171e24'
+        backgroundColor: '#171e24',
+        webPreferences: {
+            nodeIntegration: true
+        }
     });
 
     mainWindow.loadURL(

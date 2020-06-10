@@ -14,14 +14,10 @@
     "@fullcalendar/list": "^4.4.2",
     "@fullcalendar/react": "^4.4.2",
     "@fullcalendar/timegrid": "^4.4.2",
-    "@types/jest": "^24.0.0",
     "@types/node": "^14.0.11",
     "@types/react": "^16.9.0",
     "@types/react-dom": "^16.9.0",
-    "bootstrap": "^4.5.0",
-    "concurrently": "^5.2.0",
-    "electron-is-dev": "^1.2.0",
-    "install": "^0.13.0",
+    "bootstrap": "^4.5.0",   
     "nedb": "^1.8.0",
     "react": "^16.13.1",
     "react-bootstrap": "^1.0.1",
@@ -30,11 +26,14 @@
     "react-scripts": "^3.4.1",
     "sass": "^1.26.7",
     "typescript": "~3.7.2",
+    "electron-is-dev": "^1.2.0",
+    "concurrently": "^5.2.0",
+    "react-app-rewired": "^2.1.6",
     "wait-on": "^5.0.0"
   },
   "scripts": {
-    "react-start": "react-scripts start",
-    "react-build": "react-scripts build",
+    "react-start": "react-app-rewired start",
+    "react-build": "react-app-rewired build",
     "react-test": "react-scripts test",
     "react-eject": "react-scripts eject",
     "electron-build": "electron-builder",
@@ -58,11 +57,13 @@
     ]
   },
   "devDependencies": {
-    "cross-env": "^7.0.2",
-    "electron": "^9.0.2",
-    "electron-builder": "^22.7.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
-    "@testing-library/user-event": "^7.1.2"
+    "@testing-library/user-event": "^7.1.2",
+    "cross-env": "^7.0.2",
+    "electron": "^9.0.2",
+    "install": "^0.13.0",
+    "@types/jest": "^24.0.0",
+    "electron-builder": "^22.7.0"
   }
 }

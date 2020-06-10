@@ -17,6 +17,8 @@
 *.xcodeproj
 /.idea/
 /dist/
+/calendie-win32-x64
+calendie-win32-x64.zip
 /external_binaries/
 /out/
 /vendor/.gclient
@@ -40,7 +42,7 @@ SHASUMS256.txt
 **/package-lock.json
 compile_commands.json
 .envrc
-
+/build
 # npm package
 /npm/dist
 /npm/path.txt

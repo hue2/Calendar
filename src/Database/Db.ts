@@ -4,7 +4,7 @@ const DataStore = require('nedb');
 export default class Db {
     db : any;
     constructor() {
-        this.db = new DataStore({ filename: 'C:/temp/event.db', autoload: true});
+        this.db = new DataStore({ filename: 'C:/temp/huehuehue.db', autoload: true});
     }
 
     createEvent = (event: any) => {
@@ -16,9 +16,25 @@ export default class Db {
                 else {
                     reject(err);
                 }
-            });
+            });         
        });
     }
+
+    upsertEvents = (events: Array<any>) => {
+        return new Promise<IEventDb>((resolve, reject) => {
+            events.map(x => {
+                this.db.update({ _id: x._id }, x, { upsert: true }, function(err, docs) {
+                    if (docs) {
+                        resolve(docs);
+                    }
+                    else {
+                        reject(err);
+                    }
+                });
+            });      
+       });
+    }
+
 
     editEvent = (id: string, event: any) => {
         return new Promise<IEventDb>((resolve, reject) => {
