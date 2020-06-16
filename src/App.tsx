@@ -1,11 +1,13 @@
 import React, { useContext } from 'react';
+
 import FullCalendar from '@fullcalendar/react';
 import listPlugin  from '@fullcalendar/list';
 import interactionPlugin from '@fullcalendar/interaction';
-import { EventModal } from './EventModal/EventModal';
-import { IEvent, EventContext } from './Context/EventContext';
 import { Button } from 'react-bootstrap';
-import { FileModal } from './FileModal/FileModal.jsx';
+
+import { EventModal } from './EventModal/EventModal';
+import { EventContext } from './Context/EventContext';
+import { IEvent } from './Context/Types';
 import './App.scss';
 
 function App() {
@@ -61,11 +63,11 @@ function App() {
         />
         <EventModal />
         <br />
-        <div  className="f-left">
+        {/* <div  className="f-left">
           <input type="file" accept=".json" onChange={(e : any) => onImportSel(e.target.files[0].path)} />
           <Button variant="success" onClick={onImport}>Import</Button>
         </div>
-        <Button onClick={onExport}>Export</Button>
+        <Button onClick={onExport}>Export</Button> */}
       </div>
   );
 }

@@ -1,6 +1,8 @@
 import React, { useContext } from 'react';
-import { EventContext } from '../Context/EventContext';
 import { Modal, Button, FormControl, Form } from 'react-bootstrap';
+
+import { EventContext } from '../Context/EventContext';
+
 import "react-datepicker/dist/react-datepicker.css";
 import "./EventModal.scss";
 

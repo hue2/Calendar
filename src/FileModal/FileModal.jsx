@@ -1,6 +1,8 @@
 import React, { useContext } from 'react';
-import { EventContext } from '../Context/EventContext';
+
 import { Button } from 'react-bootstrap';
+
+import { EventContext } from '../Context/EventContext';
 
 export function FileModal() {
     const context = useContext(EventContext);

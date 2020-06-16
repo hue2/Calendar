@@ -1,10 +1,12 @@
 import { IEventDb } from '../Context/Types';
 const DataStore = require('nedb');
+const homedir = require('os').homedir();
 
 export default class Db {
     db : any;
     constructor() {
-        this.db = new DataStore({ filename: 'C:/temp/huehuehue.db', autoload: true});
+        console.log(homedir);
+        this.db = new DataStore({ filename: `${homedir}/Documents/calender/calendar.db`, autoload: true});
     }
 
     createEvent = (event: any) => {
