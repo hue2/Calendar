@@ -1,0 +1,18 @@
+#sticky {
+    text-align: left;
+    color: white;
+}
+
+tbody > tr {
+    &:hover {
+        background: white;
+        color: black;
+    }
+}
+
+thead > tr {
+    background: #306a87;
+    &:hover {
+       color: white !important; 
+    }
+}

@@ -8,3 +8,17 @@ label {
     border-radius: 3px;
     padding: 3px;
 }
+
+#permanent {
+    display: inline-block;
+    width: 10%;
+    height: 16px;
+    padding-top: 10px;
+}
+
+.form-control {
+    &:focus {
+        border-color: none;
+        box-shadow: none;
+    }
+}

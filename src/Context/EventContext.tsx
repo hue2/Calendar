@@ -16,8 +16,10 @@ export function EventProvider(props: any) {
     const [date, setDate] = useState(defaultDate);
     const [note, setNote] = useState("");
     const [id, setId] = useState("");
+    const [sticky, setSticky] = useState(false);
     const [importDest, setImport] = useState("");
     const [events, setEvent] = useState<Array<IEvent>>([]);
+    const [stickyEvents, setStickyEvents] = useState<Array<IEvent>>([]);
 
     useEffect(() => {
        getEvents();
@@ -29,13 +31,26 @@ export function EventProvider(props: any) {
 
     function getEvents() {
         db.getEvent().then((docs : any) => {
-            let allEvents = docs.map((item : any) => ({
+            let nonStickEvents = docs.filter(x => x.sticky === undefined || x.sticky === false);
+            let allEvents = nonStickEvents.map((item : any) => ({
                 id: item._id,
                 title: item.note,
                 start: item.date,
                 end: item.end,
+                sticky: false
             }));
             setEvent(allEvents);
+
+            let stickEventsOnly = docs.filter(x => x.sticky !== undefined && x.sticky === true);
+            let stickyEvents = stickEventsOnly.map((item : any) => ({
+                id: item._id,
+                title: item.note,
+                start: item.date,
+                end: item.end,
+                sticky: true
+            }));
+
+            setStickyEvents(stickyEvents);
         });
     }
 
@@ -43,6 +58,7 @@ export function EventProvider(props: any) {
         setId(event.id);
         setNote(event.title);
         setDate(event.start);
+        setSticky(event.sticky)
         setShow(true);
     }
     
@@ -55,6 +71,7 @@ export function EventProvider(props: any) {
         setId("");
         setNote("");;
         setDate(defaultDate);
+        setSticky(false);
     }
 
     function handleDatePick(event : any) {
@@ -63,6 +80,10 @@ export function EventProvider(props: any) {
 
     function handleNoteSet(event : any) {
         setNote(event.target.value);
+    }
+    
+    function handleSetSticky(event : any) {
+        setSticky(event.target.checked);
     }
     
     function handleEventSave() {
@@ -86,32 +107,31 @@ export function EventProvider(props: any) {
     }
 
     function handleCreate() {
-        db.createEvent({ date, note }).then((result : IEventDb) => {
+        db.createEvent({ date, note, sticky }).then((result : IEventDb) => {
             let allEvents = [...events];
             let event : IEvent = { 
                 id: result._id,
                 title: result.note,
                 start: result.date,
                 end: result.date,
+                sticky: result.sticky,
             }
-            allEvents.push(event);
-            setEvent(allEvents);
+            getEvents();
             handleClose();
         });
     }
      
     function handleEdit() {
-        db.editEvent(id, { date, note }).then((result : IEventDb) => {
+        db.editEvent(id, { date, note, sticky }).then((result : IEventDb) => {
             let allEvents = [...events];
             let event : IEvent = { 
                 id: id,
                 title: note,
                 start: date,
                 end: date,
+                sticky: true,
             }
-            let index = allEvents.findIndex(x => x.id == id);
-            allEvents[index] = event;
-            setEvent(allEvents);
+            getEvents();
             handleClose();
         });
     }
@@ -155,6 +175,8 @@ export function EventProvider(props: any) {
                 note,
                 events,
                 importDest,
+                sticky,
+                stickyEvents,
                 onShow: handleShow, 
                 onClose: handleClose,
                 onDatePick: handleDatePick, 
@@ -166,6 +188,7 @@ export function EventProvider(props: any) {
                 onExport: handleExport,
                 onImport: handleImport,
                 onImportSel: setImport,
+                onSetSticky: handleSetSticky,
             }}
         >
             {props.children}

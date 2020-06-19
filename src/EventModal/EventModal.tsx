@@ -8,7 +8,7 @@ import "./EventModal.scss";
 
 export function EventModal() {
     const context = useContext(EventContext);
-    const { show, date, note, onClose, onDatePick, onNoteSet, onEventSave, onDelete } = context;
+    const { show, date, note, sticky, onClose, onDatePick, onNoteSet, onEventSave, onDelete, onSetSticky } = context;
 
     return (
         <Modal show={show} onHide={onClose}>
@@ -20,12 +20,22 @@ export function EventModal() {
             <Modal.Body>
                 <Form>
                     <Form.Group>
+                        <div>
+                            <Form.Label>
+                                Sticky:
+                            </Form.Label>
+                            <FormControl id="permanent" type="checkbox" 
+                                checked={sticky} 
+                                onChange={onSetSticky}
+                            />
+                        </div>
                         <Form.Label>
                             Date:
                         </Form.Label>
                         <FormControl id="date" type="date" 
                             value={date} 
                             onChange={onDatePick}
+                            disabled={sticky}
                         />
 
                         <br />

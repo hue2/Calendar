@@ -2,6 +2,7 @@ export interface IEventDb {
     _id: string,
     note: string, 
     date: string,
+    sticky: boolean,
 }
 
 export interface IContextProps {
@@ -10,6 +11,8 @@ export interface IContextProps {
     note: string,
     events: Array<IEvent>,
     importDest: string,
+    sticky: boolean,
+    stickyEvents: Array<IEvent>,
     onShow: () => void,
     onClose: () => void,
     onDatePick: (event : any) => void,
@@ -21,6 +24,7 @@ export interface IContextProps {
     onExport: () => void,
     onImportSel: (data: string) => void,
     onImport: (event: any) => void;
+    onSetSticky: (event: any) => void;
 }
 
 export interface IEvent {
@@ -28,4 +32,5 @@ export interface IEvent {
     start: string,
     end: string,
     title: string,
+    sticky: boolean
 }
