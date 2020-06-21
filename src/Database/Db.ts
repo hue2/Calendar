@@ -53,7 +53,7 @@ export default class Db {
 
     getEvent = () => {
        return new Promise((resolve, reject) => {
-            this.db.find({}, function(err, docs) {
+            this.db.find({}).sort({ note: 1 }).exec(function(err, docs) {
                 if (docs) {
                     resolve(docs);
                 }
