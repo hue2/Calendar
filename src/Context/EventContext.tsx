@@ -17,7 +17,6 @@ export function EventProvider(props: any) {
     const [note, setNote] = useState("");
     const [id, setId] = useState("");
     const [sticky, setSticky] = useState(false);
-    const [importDest, setImport] = useState("");
     const [events, setEvent] = useState<Array<IEvent>>([]);
     const [stickyEvents, setStickyEvents] = useState<Array<IEvent>>([]);
 
@@ -95,10 +94,6 @@ export function EventProvider(props: any) {
        }
     }
 
-    function handleExportDestination(data: any) {
-        let allData = data.target.files[0].path
-    }
-
     function handleDelete() {
         db.deleteEvent(id).then(() => {
             handleClose();
@@ -108,14 +103,6 @@ export function EventProvider(props: any) {
 
     function handleCreate() {
         db.createEvent({ date, note, sticky }).then((result : IEventDb) => {
-            let allEvents = [...events];
-            let event : IEvent = { 
-                id: result._id,
-                title: result.note,
-                start: result.date,
-                end: result.date,
-                sticky: result.sticky,
-            }
             getEvents();
             handleClose();
         });
@@ -123,50 +110,10 @@ export function EventProvider(props: any) {
      
     function handleEdit() {
         db.editEvent(id, { date, note, sticky }).then((result : IEventDb) => {
-            let allEvents = [...events];
-            let event : IEvent = { 
-                id: id,
-                title: note,
-                start: date,
-                end: date,
-                sticky: true,
-            }
             getEvents();
             handleClose();
         });
-    }
-
-    function handleExport() {
-        const backupDir = `C:/calender-backup`;
-        let date = new Date();
-        let minute = date.getMinutes();
-        let hour = date.getHours();
-        let second = date.getSeconds();
-
-        if (!fs.existsSync(backupDir)){
-            fs.mkdirSync(backupDir);
-        }
-        let allData = db.getEvent().then(result => {
-            fs.writeFile(`${backupDir}/${defaultDate}-${hour}${minute}${second}.json`,
-                JSON.stringify(result),
-                function(err) {
-                    if (err) {
-                        alert(err);
-                    }
-                    else {
-                        alert("Exported to C:/calendar-backup");
-                    }
-                }
-            )
-        })
-    }
-
-    function handleImport() {
-        fs.readFile(importDest, function(err, result) {
-            db.upsertEvents(JSON.parse(result));
-            db.getEvent();
-        });        
-    }
+    }  
 
     return (
         <EventContext.Provider value={{
@@ -174,7 +121,6 @@ export function EventProvider(props: any) {
                 date, 
                 note,
                 events,
-                importDest,
                 sticky,
                 stickyEvents,
                 onShow: handleShow, 
@@ -184,10 +130,6 @@ export function EventProvider(props: any) {
                 onEventSave: handleEventSave,
                 onEdit: handleEditModalShow,
                 onDelete: handleDelete,
-                onExportSelect: handleExportDestination,
-                onExport: handleExport,
-                onImport: handleImport,
-                onImportSel: setImport,
                 onSetSticky: handleSetSticky,
             }}
         >

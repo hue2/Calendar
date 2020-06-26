@@ -10,7 +10,6 @@ export interface IContextProps {
     date: string,
     note: string,
     events: Array<IEvent>,
-    importDest: string,
     sticky: boolean,
     stickyEvents: Array<IEvent>,
     onShow: () => void,
@@ -20,10 +19,6 @@ export interface IContextProps {
     onEventSave: (id: string | null) => void,
     onEdit: (event : IEvent) => void,
     onDelete: () => void,
-    onExportSelect: (data: any) => void,
-    onExport: () => void,
-    onImportSel: (data: string) => void,
-    onImport: (event: any) => void;
     onSetSticky: (event: any) => void;
 }
 

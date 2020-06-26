@@ -3,7 +3,6 @@ import React, { useContext } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import listPlugin  from '@fullcalendar/list';
 import interactionPlugin from '@fullcalendar/interaction';
-import { Button, Table } from 'react-bootstrap';
 
 import { EventModal } from './EventModal/EventModal';
 import { EventContext } from './Context/EventContext';
@@ -13,7 +12,7 @@ import './App.scss';
 
 function App() {
   const context = useContext(EventContext);
-  const { events, stickyEvents, onShow, onEdit, onExport, onImport, onImportSel } = context;
+  const { events, stickyEvents, onShow, onEdit } = context;
 
   function handleShow() {
     onShow();
@@ -65,13 +64,7 @@ function App() {
               eventColor='#E79B25'
             />
             <EventModal />
-            <br />
-            {/* <div  className="f-left">
-              <input type="file" accept=".json" onChange={(e : any) => onImportSel(e.target.files[0].path)} />
-              <Button variant="success" onClick={onImport}>Import</Button>
-            </div>
-            <Button onClick={onExport}>Export</Button> */}
-        
+            <br />               
           <br/>
           <StickyTable stickyEvents={stickyEvents} handleEditModal={handleEditModal} />
        
