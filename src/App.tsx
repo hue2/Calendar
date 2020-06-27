@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 
 import FullCalendar from '@fullcalendar/react';
 import listPlugin  from '@fullcalendar/list';
+import dayGridPlugin  from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 
 import { EventModal } from './EventModal/EventModal';
@@ -38,12 +39,17 @@ function App() {
               views={{
                 listWeek: { buttonText: 'Week' },
                 listMonth: { buttonText: 'Month' },
+                dayGrid30Day: {
+                  type: 'listMonth',
+                  duration: { days: 30 },
+                  buttonText: 'Month'
+                }
               }}
               header={{
                 center: 'addEventButton',
-                right: 'prev, listWeek, listMonth, next'
+                right: 'prev, listWeek, dayGrid30Day, next'
               }}
-              plugins={[ interactionPlugin, listPlugin  ]}
+              plugins={[ interactionPlugin, listPlugin, dayGridPlugin  ]}
               selectable={true}
               customButtons={ 
                 {
@@ -53,7 +59,7 @@ function App() {
                   }
                 }
               }
-              
+              allDayText={""}
               events={events}
               dateClick={(info) => {
                 alert(info.dateStr);

@@ -5,8 +5,7 @@ const homedir = require('os').homedir();
 export default class Db {
     db : any;
     constructor() {
-        console.log(homedir);
-        this.db = new DataStore({ filename: `${homedir}/Documents/calender/calendar.db`, autoload: true});
+        this.db = new DataStore({ filename: `${homedir}\\Documents\\calender\\calendar.db`, autoload: true});
     }
 
     createEvent = (event: any) => {
@@ -21,22 +20,6 @@ export default class Db {
             });         
        });
     }
-
-    upsertEvents = (events: Array<any>) => {
-        return new Promise<IEventDb>((resolve, reject) => {
-            events.map(x => {
-                this.db.update({ _id: x._id }, x, { upsert: true }, function(err, docs) {
-                    if (docs) {
-                        resolve(docs);
-                    }
-                    else {
-                        reject(err);
-                    }
-                });
-            });      
-       });
-    }
-
 
     editEvent = (id: string, event: any) => {
         return new Promise<IEventDb>((resolve, reject) => {
@@ -76,4 +59,12 @@ export default class Db {
             })
         })
     }
+
+    logResult = (data : any) => {
+        console.log(data);
+    }
+}
+
+function logResult(data: any) {
+    console.log(data);
 }

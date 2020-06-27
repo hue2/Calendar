@@ -3,8 +3,6 @@ import React, { useState, createContext, useEffect } from "react";
 import Db from '../Database/Db';
 import { IEventDb, IContextProps, IEvent } from './Types';
 
-const fs = require('fs');
-
 export const EventContext = createContext({} as IContextProps);
 
 const db = new Db();
@@ -50,6 +48,9 @@ export function EventProvider(props: any) {
             }));
 
             setStickyEvents(stickyEvents);
+        })
+        .catch(ex => {
+            console.log(ex);
         });
     }
 

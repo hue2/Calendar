@@ -6,6 +6,7 @@
 $dark-bg: #171e24;
 $dark-blue: #353B47;
 $light-blue: #306a87;
+$purple: #59596B;
 
 body {
   background: $dark-bg !important;
@@ -68,8 +69,8 @@ table tr {
   background-color: $dark-blue !important;
 }
 
-.fc-widget-header {
-  background: #59596B !important;
+.fc-widget-header, .fc-list-heading {
+  background: $purple !important;
 }
 
 .fc-view-container {
@@ -94,4 +95,16 @@ table tr {
 
 .tab-content {
   margin-top: 15px;
+}
+
+td, th {
+  display: block;
+}
+
+.fc-list-item-time, .fc-list-item-marker {
+  display: none;
+}
+
+.fc-widget-header {
+  height: auto;
 }

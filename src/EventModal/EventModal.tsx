@@ -54,7 +54,7 @@ export function EventModal() {
                 <Button variant="danger" className="mr-auto" onClick={onDelete}>
                     Delete
                 </Button>
-                <Button variant="secondary" onClick={onClose}>
+                <Button variant="secondary" id="close-btn" onClick={onClose}>
                     Close
                 </Button>
                 <Button variant="primary" onClick={() => onEventSave("hello")}>
