@@ -1,13 +1,13 @@
-import React, { useState, createContext, useEffect } from "react";
+import React, { useState, createContext, useEffect, useContext } from "react";
 
 import Db from '../Database/Db';
 import { IEventDb, IContextProps, IEvent } from './Types';
 
-export const EventContext = createContext({} as IContextProps);
+const EventContext = createContext({} as IContextProps);
 
 const db = new Db();
 
-export function EventProvider(props: any) {
+function EventProvider(props: any) {
     let defaultDate = new Date().toISOString().substring(0, 10);
 
     const [show, setShow] = useState(false);
@@ -138,3 +138,7 @@ export function EventProvider(props: any) {
         </EventContext.Provider>
     )
 }
+
+const useEvent = () => useContext(EventContext);
+
+export { EventContext, EventProvider, useEvent }

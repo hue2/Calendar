@@ -1,14 +1,13 @@
 import React, { useContext } from 'react';
-import { render, fireEvent, queryByAttribute  } from '@testing-library/react';
+import { render  } from '@testing-library/react';
 import Adapter from 'enzyme-adapter-react-16';
 import Enzyme, { shallow, mount } from 'enzyme';
 
 import FullCalendar from '@fullcalendar/react';
 
 import App from '../App';
-import { EventContext } from '../Context/EventContext';
+import { EventContext, EventProvider, useEvent } from '../Context/EventContext';
 import { EventModal } from '../EventModal/EventModal';
-import { EventProvider } from '../Context/EventContext';
 
 Enzyme.configure({ adapter: new Adapter() });
 
@@ -29,19 +28,11 @@ describe("test event modal", () => {
             onSetSticky: jest.fn(),
         }
         contextCallback = jest.fn();
-
-        wrapper = mount(
-            <EventProvider value={context}>
-                <EventModal />
-                <EventContext.Consumer>
-                    {contextCallback}
-                </EventContext.Consumer>
-            </EventProvider>
-        );        
-    });
-
-    afterEach(() => {
-        //wrapper.unmount();
+        wrapper =  render(
+            <EventContext.Provider value={contextCallback}>
+                <EventModal />     
+            </EventContext.Provider>,
+        );
     });
 
     it("should match snapshot", () => {
@@ -50,16 +41,10 @@ describe("test event modal", () => {
     });
 
     it('should render', () => {
-        jest.mock("../Context/");
+        const { getByTestId } = wrapper;
 
-        const { getByText } = render(
-            <EventProvider value={context}>
-                <EventModal />           
-            </EventProvider>
-        );
-
-        const closeBtn = getByText('Close');
-        fireEvent.click(closeBtn);
-        expect(contextCallback).toHaveBeenCalledTimes(1);
+        const modal = getByTestId('event-modal');
+      
+        expect(modal).toBeInTheDocument();      
     })
 })

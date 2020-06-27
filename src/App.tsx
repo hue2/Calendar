@@ -6,14 +6,13 @@ import dayGridPlugin  from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 
 import { EventModal } from './EventModal/EventModal';
-import { EventContext } from './Context/EventContext';
+import { useEvent } from './Context/EventContext';
 import { IEvent } from './Context/Types';
 import { StickyTable } from './StickyTable/StickyTable';
 import './App.scss';
 
 function App() {
-  const context = useContext(EventContext);
-  const { events, stickyEvents, onShow, onEdit } = context;
+  const { events, stickyEvents, onShow, onEdit } = useEvent();
 
   function handleShow() {
     onShow();
