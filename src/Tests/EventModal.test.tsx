@@ -3,9 +3,6 @@ import { render  } from '@testing-library/react';
 import Adapter from 'enzyme-adapter-react-16';
 import Enzyme, { shallow, mount } from 'enzyme';
 
-import FullCalendar from '@fullcalendar/react';
-
-import App from '../App';
 import { EventContext, EventProvider, useEvent } from '../Context/EventContext';
 import { EventModal } from '../EventModal/EventModal';
 
